@@ -2,7 +2,7 @@ const readContacts = require("../utils/readContacts");
 
 const getContacts = async (req, res) => {
 	const contacts = await readContacts();
-
+	
 	res.status(200).json({
 		status: "success",
 		data: contacts,

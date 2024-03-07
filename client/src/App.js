@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -7,7 +7,20 @@ function App() {
 	const [contacts, setContacts] = useState([]);
 	const [showForm, setShowForm] = useState(false);
 
+	useEffect(() => {
+		const fetchContacts = async () => {
+			const response = await fetch(`http://localhost:8000/api/contacts`);
+
+			const result = await response.json();
+
+			setContacts(result?.data);
+		};
+
+		fetchContacts();
+	}, []);
+
 	const toggleForm = () => {
+		// setShowForm(showForm ? false : true)
 		setShowForm(!showForm);
 	};
 
