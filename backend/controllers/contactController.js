@@ -1,6 +1,14 @@
+const readContacts = require("../utils/readContacts");
+
 const getContacts = async (req, res) => {
-	res.send("GET All contacts");
+	const contacts = await readContacts();
+
+	res.status(200).json({
+		status: "success",
+		data: contacts,
+	});
 };
+
 const createContact = async (req, res) => {
 	res.send("create contact");
 };
