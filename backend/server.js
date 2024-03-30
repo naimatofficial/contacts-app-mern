@@ -11,6 +11,7 @@ const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
 	res.send("API is running...");

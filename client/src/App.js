@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -9,11 +10,8 @@ function App() {
 
 	useEffect(() => {
 		const fetchContacts = async () => {
-			const response = await fetch(`http://localhost:8000/api/contacts`);
-
-			const result = await response.json();
-
-			setContacts(result?.data);
+			const { data } = await axios.get(`http://localhost:8000/api/contacts`);
+			setContacts(data.doc);
 		};
 
 		fetchContacts();
@@ -28,8 +26,10 @@ function App() {
 		setShowForm(false);
 	};
 
-	const addContact = (contact) => {
-		setContacts([...contacts, contact]);
+	const addContact = async (contact) => {
+		// setContacts([...contacts, contact]);
+		await axios.post("http://localhost:8000/api/contacts", contact);
+
 		toggleForm();
 	};
 
