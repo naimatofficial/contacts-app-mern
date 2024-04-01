@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { createContact, fetchContacts } from "./apis";
 
 function App() {
 	const [contacts, setContacts] = useState([]);
 	const [showForm, setShowForm] = useState(false);
-
-	useEffect(() => {
-		const fetchContacts = async () => {
-			const { data } = await axios.get(`http://localhost:8000/api/contacts`);
-			setContacts(data.doc);
-		};
-
-		fetchContacts();
-	}, []);
 
 	const toggleForm = () => {
 		// setShowForm(showForm ? false : true)
 		setShowForm(!showForm);
 	};
 
+	const addContactHandler = async (contact) => {
+		createContact(contact);
+		toggleForm();
+	};
+
+	// const updateContactHandler = async (contact) => {
+	// 	updateContact(contact, contact.id);
+	// 	toggleForm();
+	// };
+
 	const onCloseHandler = () => {
 		setShowForm(false);
 	};
 
-	const addContact = async (contact) => {
-		// setContacts([...contacts, contact]);
-		await axios.post("http://localhost:8000/api/contacts", contact);
+	useEffect(() => {
+		const getContacts = async () => {
+			const data = await fetchContacts();
 
-		toggleForm();
-	};
+			setContacts(data);
+		};
+
+		getContacts();
+	}, []);
 
 	return (
 		<div className="w-2/3 mx-auto mt-8 p-6 bg-gray-800 rounded-md">
@@ -46,7 +50,10 @@ function App() {
 				Add New Contact
 			</button>
 			{showForm && (
-				<ContactForm addContact={addContact} onClose={onCloseHandler} />
+				<ContactForm
+					addContactHandler={addContactHandler}
+					onClose={onCloseHandler}
+				/>
 			)}
 			<ContactList contacts={contacts} />
 		</div>

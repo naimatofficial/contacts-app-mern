@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const ContactForm = ({ addContact, onClose }) => {
+const ContactForm = ({ addContactHandler, onClose }) => {
 	const dialogRef = useRef(null);
 	const [formValues, setFormValues] = useState({
 		name: "",
@@ -53,7 +53,7 @@ const ContactForm = ({ addContact, onClose }) => {
 		event.preventDefault();
 		const isValid = validateForm();
 		if (isValid) {
-			addContact(formValues);
+			addContactHandler(formValues);
 			setFormValues({ name: "", email: "", phoneNumber: "" });
 			setFormSubmitted(true);
 			onClose();

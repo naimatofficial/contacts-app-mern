@@ -1,7 +1,12 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { deleteContact } from "../apis";
 
 function ContactItem({ contact }) {
+	const deleteHandler = async (id) => {
+		deleteContact(id);
+	};
+
 	return (
 		<div className="flex items-center my-2 bg-slate-100 px-4 py-1 rounded-full w-full">
 			<div
@@ -18,7 +23,10 @@ function ContactItem({ contact }) {
 				<button className="mr-2 text-blue-500">
 					<FaEdit />
 				</button>
-				<button className="text-red-500">
+				<button
+					className="text-red-500"
+					onClick={() => deleteHandler(contact.id)}
+				>
 					<FaTrash />
 				</button>
 			</div>

@@ -44,7 +44,7 @@ const getContactById = async (req, res) => {
 		const { id } = req.params;
 		const data = await readContacts();
 
-		const contact = data.filter((el) => el.id === id);
+		const contact = data.filter((item) => item.id === id);
 
 		res.status(200).json({
 			status: "success",
@@ -59,12 +59,9 @@ const getContactById = async (req, res) => {
 const updateContactById = async (req, res) => {
 	try {
 		const { id } = req.params;
-
 		const data = await readContacts();
 
 		const index = data.findIndex((item) => item.id === id);
-
-		console.log(index);
 
 		const contact = data[index];
 
@@ -91,10 +88,9 @@ const updateContactById = async (req, res) => {
 const deleteContactById = async (req, res) => {
 	try {
 		const data = await readContacts();
-
 		const { id } = req.params;
 
-		const filteredData = data.filter((el) => el.id !== id);
+		const filteredData = data.filter((item) => item.id !== id);
 
 		writeContacts(filteredData);
 
